@@ -18,7 +18,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { totalOrders, ordersPerDay } = await fetchTotalOrders(filter);
+        const { totalOrders } = await fetchAllOrders();
+        const { ordersPerDay } = await fetchTotalOrders(filter);
         const fetchedTotalIkan = await fetchTotalIkan();
         const fetchedTotalUser = await fetchTotalUser();
         const fetchedTotalAdmin = await fetchTotalAdmin();
