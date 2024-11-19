@@ -132,6 +132,16 @@ export const editOrder = async (orderId, orderData) => {
   }
 };
 
+export const completeOrder = async (id) => {
+  try {
+    const response = await axios.put(`order/${id}/complete`);
+    return response.data;
+  } catch (error) {
+    console.error('Error completing order:', error);
+    throw error;
+  }
+};
+
 export const deleteOrder = async (id) => {
   try {
     const response = await API.delete(`order/delete-order/${id}`);

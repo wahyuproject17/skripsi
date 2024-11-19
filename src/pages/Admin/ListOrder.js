@@ -73,13 +73,17 @@ function ListOrder() {
 
   const handleCompleteOrder = async (id) => {
     try {
-      // Logika untuk memperbarui status pesanan di backend
+      // Panggil API untuk memperbarui status pesanan
+      const updatedOrder = await completeOrder(id);
+  
+      // Perbarui status pesanan di state
       const updatedOrders = orders.map(order =>
-        order.id_pesanan === id ? { ...order, status: 'Selesai' } : order
+        order.id_pesanan === id ? { ...order, status: updatedOrder.status } : order
       );
       setOrders(updatedOrders);
-      setSearchResults(updatedOrders); // Memperbarui hasil pencarian juga
-      console.log(`Pesanan dengan ID ${id} telah diselesaikan.`);
+      setSearchResults(updatedOrders); // Perbarui hasil pencarian
+  
+      console.log(`Pesanan dengan ID ${id} berhasil diselesaikan.`);
     } catch (error) {
       console.error('Error completing order:', error);
     }
