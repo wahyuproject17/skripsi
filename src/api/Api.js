@@ -132,9 +132,9 @@ export const editOrder = async (orderId, orderData) => {
   }
 };
 
-export const deleteOrder = async (orderId) => {
+export const deleteOrder = async (id) => {
   try {
-    const response = await API.delete(`order/delete-order/${orderId}`);
+    const response = await API.delete(`order/delete-order/${id}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to delete order');
