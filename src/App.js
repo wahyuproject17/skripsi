@@ -132,7 +132,9 @@ const ChatbotWithRoute = () => {
   const location = useLocation(); // useLocation hook inside the correct scope
 
   // Only render Chatbot if the path does not include '/admin'
-  if (location.pathname.includes('/Admin')) {
+  if (location.pathname.includes('/Admin' || location.pathname.includes('/login')
+    || location.pathname.includes('/register')  || location.pathname.includes('/Shop')
+    || location.pathname.includes('/Gallery'))) {
     return null; // Don't render Chatbot on admin pages
   }
 
