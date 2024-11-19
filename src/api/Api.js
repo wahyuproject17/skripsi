@@ -195,7 +195,7 @@ export const fetchTotalOrders = async (range) => {
 
 export const fetchAllOrders = async () => {
   try {
-      const response = await API.get('order/get-totalorder'); // Sesuaikan dengan endpoint Anda
+      const response = await API.get('order/get-total'); // Sesuaikan dengan endpoint Anda
       const data = await response.data;
       if (data.success) {
           return data.total_orders; // Hanya mengembalikan nilai total_order
