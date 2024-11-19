@@ -132,9 +132,9 @@ export const editOrder = async (orderId, orderData) => {
   }
 };
 
-export const completeOrder = async (id) => {
+export const completeOrder = async (id, body) => {
   try {
-    const response = await axios.put(`order/${id}/complete`);
+    const response = await API.put(`order/${id}/complete`, body);
     return response.data;
   } catch (error) {
     console.error('Error completing order:', error);

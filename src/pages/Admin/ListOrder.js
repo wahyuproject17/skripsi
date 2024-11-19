@@ -7,7 +7,7 @@ import {
   Typography, Grid, TablePagination, TextField, MenuItem, Select, FormControl, InputLabel
 } from '@mui/material';
 import { Delete as DeleteIcon, Description as DescriptionIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
-import { fetchOrders, deleteOrder } from '../../api/Api';
+import { fetchOrders, deleteOrder, completeOrder } from '../../api/Api';
 
 function ListOrder() {
   const [orders, setOrders] = useState([]);
@@ -74,7 +74,7 @@ function ListOrder() {
   const handleCompleteOrder = async (id) => {
     try {
       // Panggil API untuk memperbarui status pesanan
-      const updatedOrder = await completeOrder(id);
+      const updatedOrder = await completeOrder(id, { status: 'berhasil' });
   
       // Perbarui status pesanan di state
       const updatedOrders = orders.map(order =>
@@ -174,7 +174,7 @@ function ListOrder() {
                       <TableCell align="center">{order.jumlah_ikan}</TableCell>
                       <TableCell align="center">{order.harga}</TableCell>
                       <TableCell align="center">{order.pesanan_tanggal}</TableCell>
-                      <TableCell align="center">{order.status || 'Belum selesai'}</TableCell>
+                      <TableCell align="center">{order.status || 'proses'}</TableCell>
                       <TableCell align="center">
                         <IconButton color="primary" onClick={() => handleViewDetails(order)}>
                           <DescriptionIcon />
