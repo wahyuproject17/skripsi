@@ -5,7 +5,7 @@ import FooterAdmin from '../../components/FooterAdmin';
 import { StyleSheet, css } from 'aphrodite';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { FaUsers, FaUserShield, FaFish, FaChartLine } from 'react-icons/fa';
-import { fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin } from '../../api/Api';
+import { fetchAllOrders,fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin } from '../../api/Api';
 
 const Dashboard = () => {
   const [totalOrder, setTotalOrder] = useState(0);
