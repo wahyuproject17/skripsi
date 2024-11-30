@@ -188,6 +188,21 @@ export const fetchTotalIkan = async () => {
   }
 };
 
+export const fetchJenisIkan = async () => {
+  try {
+      const response = await API.get('dashboard/get-jenisikan'); // Sesuaikan dengan endpoint Anda
+      const data = await response.data;
+      if (data.success) {
+          return data.total_jenis_ikan; // Hanya mengembalikan nilai total_ikan
+      } else {
+          throw new Error('Failed to fetch total jenis ikan');
+      }
+  } catch (error) {
+      console.error('Error fetching total jenis ikan:', error);
+      return 0; // Mengembalikan 0 jika terjadi kesalahan
+  }
+};
+
 export const fetchTotalOrders = async (range) => {
   try {
       const response = await API.get(`order/get-total/${range}`); // Menyertakan parameter range

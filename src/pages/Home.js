@@ -5,7 +5,7 @@ import Headershow from '../components/headerSlideshow';
 import Slideshow from '../components/ImgSlideshow';
 import { Button } from 'react-bootstrap';
 import Footer from "../components/Footer";
-import { fetchAllOrders, fetchTotalIkan } from '../api/Api';
+import { fetchAllOrders, fetchJenisIkan } from '../api/Api';
 import { motion, useAnimation } from 'framer-motion';
 
 const Home = () => {
@@ -56,18 +56,18 @@ const Home = () => {
         fetchAllOrderData();
       }, []);
 
-    const [totalIkan, setTotalIkan] = useState(0);
+    const [jenisIkan, setJenisIkan] = useState(0);
     useEffect(() => {
-        const fetchTotalIkanData = async () => {
+        const fetchJenisIkanData = async () => {
             try {
-                const fetchedTotalIkan = await fetchTotalIkan(); // Menggunakan fetchTotalIkan untuk mengambil data total ikan
-                setTotalIkan(fetchedTotalIkan);
-                localStorage.setItem('totalIkan', JSON.stringify(fetchedTotalIkan));
+                const fetchedJenisIkan = await fetchJenisIkan(); // Menggunakan fetchTotalIkan untuk mengambil data total ikan
+                setJenisIkan(fetchedJenisIkan);
+                localStorage.setItem('jenisIkan', JSON.stringify(fetchedJenisIkan));
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchTotalIkanData();
+        fetchJenisIkanData();
     }, []);
 
     return (
@@ -108,8 +108,8 @@ const Home = () => {
                         animate={controls}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        <h3>Jumlah Ikan</h3>
-                        <p>{totalIkan}</p>
+                        <h3>Jenis Ikan</h3>
+                        <p>{jenisIkan}</p>
                     </motion.div>
                     <motion.div
                         className="info-box"

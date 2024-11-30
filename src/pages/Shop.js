@@ -14,7 +14,7 @@ const Shop = () => {
     const [selectedCategory, setSelectedCategory] = useState("Benih");
     const [selectedFish, setSelectedFish] = useState("");
     const [selectedSize, setSelectedSize] = useState("");
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [availableStock, setAvailableStock] = useState(0);
 
@@ -60,23 +60,24 @@ const Shop = () => {
         resetForm();
     };
 
-    const handleShowModal = () => setShowModal(true);
-
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
-        setSelectedFish("");
-        setSelectedSize("");
-        setTotalPrice(0);
-        setAvailableStock(0);
-    };
-
-    const handleFishChange = (e) => {
-        const fish = e.target.value;
+    const handleShowModal = (fish) => {
+        // Temukan kategori ikan berdasarkan data
+        const fishData = ikanData.find(item => item.jenis_ikan === fish);
+        const category = fishData ? fishData.kategori : "Benih"; // Default ke Benih jika tidak ditemukan
+    
+        setSelectedCategory(category);  // Set kategori otomatis
         setSelectedFish(fish);
-        setSelectedSize("");
-        calculateTotalPrice(fish, "", quantity);
-        updateAvailableStock(fish, "", selectedCategory);
+        setSelectedSize(""); // Reset ukuran untuk semua kategori
+        setShowModal(true);
+    
+        // Jika kategori Konsumsi, langsung hitung harga tanpa ukuran
+        if (category === "Konsumsi") {
+            calculateTotalPrice(fish, "", quantity); // Tidak ada ukuran untuk konsumsi
+            updateAvailableStock(fish, "", category); // Mengupdate stok konsumsi
+        }
+        // Jika kategori Benih, biarkan ukuran ikan tetap kosong dan bisa dipilih
     };
+    
 
     const handleSizeChange = (e) => {
         const size = e.target.value;
@@ -84,6 +85,8 @@ const Shop = () => {
         calculateTotalPrice(selectedFish, size, quantity);
         updateAvailableStock(selectedFish, size, selectedCategory);
     };
+    
+    
 
     const handleQuantityChange = (e) => {
         const qty = parseInt(e.target.value) || '';
@@ -102,7 +105,7 @@ const Shop = () => {
         }
         setTotalPrice(price * qty);
     };
-
+    
     const updateAvailableStock = (fish, size, category) => {
         let stock = 0;
         if (category === "Benih") {
@@ -114,6 +117,7 @@ const Shop = () => {
         }
         setAvailableStock(stock);
     };
+    
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -179,7 +183,7 @@ const Shop = () => {
         setSelectedCategory("Benih");
         setSelectedFish("");
         setSelectedSize("");
-        setQuantity(1);
+        setQuantity(0);
         setTotalPrice(0);
         setAvailableStock(0);
     };
@@ -196,24 +200,30 @@ const Shop = () => {
                 <Row>
                     {ikanData.filter(item => item.kategori === "Benih").map((item, index) => (
                         <Col key={index} xs={12} md={6} lg={4}>
-                            <div className={css(styles.card)} onClick={handleShowModal}>
+                            <div
+                                className={css(styles.card)}
+                                onClick={() => handleShowModal(item.jenis_ikan)}
+                            >
                                 <img src={`https://duanol.bbimijen.my.id/${item.foto_ikan}`} alt={item.jenis_ikan} className={css(styles.image)} />
                                 <div className={css(styles.overlay)}>
                                     <h2>{item.jenis_ikan}</h2>
-                                    <p>Stock: {item.total || 0} ekor</p>
                                     <p>Harga: Rp {item.harga_ikan.toLocaleString()}/seratus ekor</p>
                                 </div>
                             </div>
                         </Col>
                     ))}
                 </Row>
+
                 <div style={{ padding: '20px', backgroundColor: '#F0F8FF', textAlign: 'left' }}>
                     <h1 style={{ color: '#333', marginBottom: '20px', fontSize: '2rem' }}>Ikan Konsumsi</h1>
                 </div>
                 <Row>
                     {ikanData.filter(item => item.kategori === "Konsumsi").map((item, index) => (
                         <Col key={index} xs={12} md={6} lg={4}>
-                            <div className={css(styles.card)} onClick={handleShowModal}>
+                            <div
+                                className={css(styles.card)}
+                                onClick={() => handleShowModal(item.jenis_ikan)} // Hanya mengirim jenis ikan
+                            >
                                 <img src={`https://duanol.bbimijen.my.id/${item.foto_ikan}`} alt={item.jenis_ikan} className={css(styles.image)} />
                                 <div className={css(styles.overlay)}>
                                     <h2>{item.jenis_ikan}</h2>
@@ -224,6 +234,7 @@ const Shop = () => {
                         </Col>
                     ))}
                 </Row>
+
             </Container>
             <Footer />
             <Modal show={showModal} onHide={handleCloseModal} centered>
@@ -232,56 +243,62 @@ const Shop = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleFormSubmit}>
-                        <Form.Group controlId="category">
-                            <Form.Label>Pilih Kategori:</Form.Label>
-                            <Form.Control as="select" value={selectedCategory} onChange={handleCategoryChange}>
-                                <option value="Benih">Benih</option>
-                                <option value="Konsumsi">Konsumsi</option>
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group controlId="fishType">
-                            <Form.Label>Pilih Jenis Ikan:</Form.Label>
-                            <Form.Control as="select" value={selectedFish} onChange={handleFishChange} disabled={!selectedCategory}>
-                                <option value="">Pilih...</option>
-                                {ikanData.filter(item => item.kategori === selectedCategory).map((fish, index) => (
-                                    <option key={index} value={fish.jenis_ikan}>{fish.jenis_ikan}</option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
                         {selectedCategory === "Benih" && selectedFish && (
                             <Form.Group controlId="size">
                                 <Form.Label>Pilih Ukuran:</Form.Label>
-                                <Form.Control as="select" value={selectedSize} onChange={handleSizeChange} disabled={!selectedFish}>
+                                <Form.Control
+                                    as="select"
+                                    value={selectedSize}
+                                    onChange={handleSizeChange}
+                                >
                                     <option value="">Pilih ukuran...</option>
-                                    {benihData.filter(item => item.jenis_ikan === selectedFish).map((fish, index) => (
-                                        <option key={index} value={fish.ukuran}>{fish.ukuran}</option>
-                                    ))}
+                                    {benihData
+                                        .filter(item => item.jenis_ikan === selectedFish)
+                                        .map((fish, index) => (
+                                            <option key={index} value={fish.ukuran}>{fish.ukuran}</option>
+                                        ))}
                                 </Form.Control>
                             </Form.Group>
                         )}
-                        {selectedCategory === "Benih" && selectedFish && selectedSize && (
-                            <Form.Group>
-                                <Form.Label>Jumlah ikan tersedia:</Form.Label>
-                                <p>{benihData.find(item => item.jenis_ikan === selectedFish && item.ukuran === selectedSize)?.jumlah_ikan || 0} ekor</p>
-                            </Form.Group>
-                        )}
-                        {selectedCategory === "Konsumsi" && selectedFish && (
-                            <Form.Group>
-                                <Form.Label>Jumlah ikan tersedia:</Form.Label>
-                                <p>{konsumsiData.find(item => item.jenis_ikan === selectedFish)?.jumlah_ikan || 0} ekor</p>
-                            </Form.Group>
-                        )}
+
+                        <Form.Group>
+                            <Form.Label>Jumlah ikan tersedia:</Form.Label>
+                            <p>
+                                {selectedCategory === "Benih" && selectedSize
+                                    ? benihData.find(item => item.jenis_ikan === selectedFish && item.ukuran === selectedSize)?.jumlah_ikan || 0
+                                    : konsumsiData.find(item => item.jenis_ikan === selectedFish)?.jumlah_ikan || 0
+                                } ekor
+                            </p>
+                        </Form.Group>
+
                         <Form.Group controlId="quantity">
                             <Form.Label>Jumlah beli:</Form.Label>
-                            <Form.Control type="number" value={quantity} onChange={handleQuantityChange} min="1" />
+                            <Form.Control
+                                type="number"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                min="1"
+                            />
                         </Form.Group>
+
                         <Form.Group>
                             <Form.Label>Total harga:</Form.Label>
                             <p>Rp {totalPrice.toLocaleString()}</p>
                         </Form.Group>
-                        <Button className="mt-5" variant="primary" type="submit" disabled={!selectedFish || quantity < 1}>Buat Pesanan</Button>
+
+                        <Button
+                            style={{ width: '100%', alignSelf: 'center' }}
+                            className="mt-5"
+                            variant="primary"
+                            type="submit"
+                            disabled={!selectedFish || quantity < 1 || (selectedCategory === "Benih" && !selectedSize)}
+                        >
+                            Buat Pesanan
+                        </Button>
                     </Form>
                 </Modal.Body>
+
+
             </Modal>
         </div>
     );
