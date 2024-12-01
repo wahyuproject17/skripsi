@@ -3,17 +3,26 @@ import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import { StyleSheet, css } from 'aphrodite';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { FaUsers, FaUserShield, FaFish, FaChartLine } from 'react-icons/fa';
-import { fetchAllOrders,fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin } from '../../api/Api';
+import { fetchAllOrders, fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin } from '../../api/Api';
 
 const Dashboard = () => {
   const [totalOrder, setTotalOrder] = useState(0);
   const [totalIkan, setTotalIkan] = useState(0);
   const [totalUser, setTotalUser] = useState(0);
   const [totalAdmin, setTotalAdmin] = useState(0);
-  const [filter, setFilter] = useState('1day'); // Filter default
+  const [filter, setFilter] = useState('1day');
   const [chartData, setChartData] = useState([]);
+
+  const satisfactionData = [
+    { name: 'Sangat Puas', value: 45 },
+    { name: 'Puas', value: 30 },
+    { name: 'Cukup Puas', value: 15 },
+    { name: 'Tidak Puas', value: 10 },
+  ];
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +75,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Dropdown untuk memilih filter */}
             <div className={css(styles.filterContainer)}>
               <label htmlFor="filter">Tampilkan Data: </label>
               <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -79,7 +87,6 @@ const Dashboard = () => {
               </select>
             </div>
 
-            {/* Chart */}
             <div className={css(styles.chartContainer)}>
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={chartData}>
@@ -90,6 +97,28 @@ const Dashboard = () => {
                   <Legend />
                   <Line type="monotone" dataKey="jumlah" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className={css(styles.pieContainer)}>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={satisfactionData}
+                    cx="50%"
+                    cy="50%"
+                    label
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {satisfactionData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -106,6 +135,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginLeft: '250px',
+    marginTop: '70px',
   },
   infoBoxes: {
     display: 'flex',
@@ -148,6 +179,14 @@ const styles = StyleSheet.create({
   chartContainer: {
     width: '100%',
     height: 250,
+  },
+  pieContainer: {
+    marginTop: '20px',
+    width: '100%',
+    height: 300,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

@@ -101,7 +101,7 @@ function AdminTable() {
       <Sidebar />
       <div style={{ width: '100%' }}>
         <NavbarAdmin />
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '20px', marginLeft: '250px', marginTop: '50px' }}>
           <Stack
             spacing={2}
             direction="row"

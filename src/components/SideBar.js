@@ -221,9 +221,11 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '250px',
-    height: 'auto',
+    height: '100vh',
     backgroundColor: '#004080',
+    position: 'fixed',
     padding: '20px 10px',
+    top: 40,
     '@media (max-width: 600px)': {
       display: 'none', // Sembunyikan Sidebar di mobile
     },

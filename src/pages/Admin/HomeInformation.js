@@ -61,7 +61,7 @@ function HomeInformation() {
       <Sidebar />
       <div style={{ flex: 1 }}>
         <NavbarAdmin />
-        <Container style={{ padding: '40px' }}>
+        <Container style={{ padding: '40px', marginLeft: '120px', marginTop: '50px'  }}>
           <Box 
             style={{ 
               padding: '20px', 

@@ -142,6 +142,16 @@ export const completeOrder = async (id, body) => {
   }
 };
 
+export const ratingOrder = async (id, body) => {
+  try {
+    const response = await API.put(`order/${id}/rating`, body);
+    return response.data;
+  } catch (error) {
+    console.error('Error rating order:', error);
+    throw error;
+  }
+};
+
 export const deleteOrder = async (id) => {
   try {
     const response = await API.delete(`order/delete-order/${id}`);

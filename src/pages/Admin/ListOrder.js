@@ -117,7 +117,7 @@ function ListOrder() {
         <Sidebar />
         <div style={{ width: '100%'}}>
           <NavbarAdmin />
-          <div style={{ padding: '20px' }}>
+          <div style={{ padding: '20px', marginLeft: '250px', marginTop: '80px' }}>
             {/* Dropdown tahun */}
             <FormControl variant="outlined" sx={{ marginBottom: '20px', minWidth: 120 }}>
               <InputLabel>Tahun</InputLabel>
@@ -268,6 +268,9 @@ function ListOrder() {
               </Grid>
               <Grid item xs={12}>
                 <Typography><strong>Tanggal Pesanan:</strong> {selectedOrder.pesanan_tanggal}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography><strong>Tingkat Kepuasan:</strong> {selectedOrder.tingkat_kepuasan}</Typography>
               </Grid>
             </Grid>
           )}

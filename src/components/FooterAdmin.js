@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
       color: '#fff',
       textAlign: 'center',
       padding: '15px 0',
-      width: '100%',
       marginTop: 'auto', // Memastikan footer tetap di bawah jika konten tidak cukup
       position: 'relative', // Memastikan posisi footer relatif terhadap konten
+      marginLeft: '250px',
     },
     footerText: {
       margin: 0,

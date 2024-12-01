@@ -5,7 +5,7 @@ import FooterAdmin from '../../components/FooterAdmin';
 import { fetchUsers, deleteUser, updateUser, addUser } from '../../api/Api';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button,
-  Box, Typography, IconButton, Grid, TablePagination, InputAdornment, Stack, Container
+  Box, Typography, IconButton, Grid, TablePagination, InputAdornment, Stack
 } from '@mui/material';
 import { Delete, Edit, Search } from '@mui/icons-material';
 
@@ -123,7 +123,7 @@ function UserTable() {
       <Sidebar />
       <div style={{ width: '100%' }}>
         <NavbarAdmin />
-        <Container maxWidth="lg" sx={{ padding: '20px' }}>
+        <div style={{ padding: '20px', marginLeft: '250px', marginTop: '50px' }}>
         <Stack
               spacing={2}
               direction="row"
@@ -200,7 +200,7 @@ function UserTable() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Container>
+        </div>
         <FooterAdmin />
       </div>
 

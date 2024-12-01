@@ -13,11 +13,15 @@ export default function NavbarAdmin() {
       variant="dark"
       style={{
         height: '60px', // Adjust the height as needed
+        position: 'fixed', // Makes the navbar stay at the top
+        top: 0, // Position it at the top
+        left: 0, // Align it to the left
+        right: 0, // Align it to the right
+        zIndex: 1000, // Ensure it stays on top of other elements
       }}
     >
       <Container>
         <Navbar.Brand href="#">Admin Dashboard</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="justify-content-end"
