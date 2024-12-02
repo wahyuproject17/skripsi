@@ -5,7 +5,7 @@ import FooterAdmin from '../../components/FooterAdmin';
 import { StyleSheet, css } from 'aphrodite';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { FaUsers, FaUserShield, FaFish, FaChartLine } from 'react-icons/fa';
-import { fetchAllOrders, fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin } from '../../api/Api';
+import { fetchAllOrders, fetchTotalOrders, fetchTotalIkan, fetchTotalUser, fetchTotalAdmin, fetchRating } from '../../api/Api';
 
 const Dashboard = () => {
   const [totalOrder, setTotalOrder] = useState(0);
@@ -14,13 +14,7 @@ const Dashboard = () => {
   const [totalAdmin, setTotalAdmin] = useState(0);
   const [filter, setFilter] = useState('1day');
   const [chartData, setChartData] = useState([]);
-
-  const satisfactionData = [
-    { name: 'Sangat Puas', value: 45 },
-    { name: 'Puas', value: 30 },
-    { name: 'Cukup Puas', value: 15 },
-    { name: 'Tidak Puas', value: 10 },
-  ];
+  const [satisfactionData, setSatisfactionData] = useState([]);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -32,12 +26,22 @@ const Dashboard = () => {
         const fetchedTotalIkan = await fetchTotalIkan();
         const fetchedTotalUser = await fetchTotalUser();
         const fetchedTotalAdmin = await fetchTotalAdmin();
+        const fetchedSatisfactionData = await fetchRating();
+        const formattedSatisfactionData = fetchedSatisfactionData
+          ? [
+              { name: 'Sangat Puas', value: fetchedSatisfactionData.sangat_puas },
+              { name: 'Puas', value: fetchedSatisfactionData.puas },
+              { name: 'Cukup Puas', value: fetchedSatisfactionData.cukup_puas },
+              { name: 'Tidak Puas', value: fetchedSatisfactionData.kurang_puas },
+            ]
+          : [];
 
         setTotalOrder(fetchedTotalOrder);
         setTotalIkan(fetchedTotalIkan);
         setTotalUser(fetchedTotalUser);
         setTotalAdmin(fetchedTotalAdmin);
         setChartData(ordersPerDay);
+        setSatisfactionData(formattedSatisfactionData);
       } catch (error) {
         console.error(error);
       }
@@ -74,6 +78,7 @@ const Dashboard = () => {
                 <p className={css(styles.infoValue)}>{totalOrder}</p>
               </div>
             </div>
+            <h3 className={css(styles.chartTitle)}>Grafik Penjualan</h3>
 
             <div className={css(styles.filterContainer)}>
               <label htmlFor="filter">Tampilkan Data: </label>
@@ -99,7 +104,8 @@ const Dashboard = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-
+            <br/>
+            <h3 className={css(styles.chartTitle)}>Grafik Tingkat Kepuasan</h3>
             <div className={css(styles.pieContainer)}>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>

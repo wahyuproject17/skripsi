@@ -96,6 +96,10 @@
   border-bottom: 5px solid yellow;
 }
 
+.nav-link-custom:hover .navbar-dropdown {
+  display: block; /* Tampilkan dropdown saat dihover */
+}
+
 #profile-nav-dropdown .dropdown-toggle {
   color: #000050 !important;
 }
@@ -106,6 +110,10 @@
 .navbar-dropdown {
   background-color: #000050;
   z-index: 1050;
+  display: none;
+  position: absolute; /* Tetapkan posisi absolut */
+  top: 0; /* Tepat di bawah elemen "Tentang" */
+  left: 0;
 }
 .navbar-dropdown .dropdown-menu.show {
   display: block;

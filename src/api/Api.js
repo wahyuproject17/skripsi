@@ -105,6 +105,15 @@ export const fetchOrders = async () => {
   }
 };
 
+export const fetchRating = async () => {
+  try {
+    const response = await API.get('order/get-rating');
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch rating');
+  }
+};
+
 export const fetchOrderById = async (id) => {
   try {
     const response = await API.get(`order/get-order/${id}`);

@@ -87,10 +87,10 @@ function NavbarMain() {
                     className="nav-link-custom navbar-dropdown"
                     show={showDropdown}
                     style={{
-                      position: 'unset',
-                      top: '100%',
+                      position: 'absolute',
+                      top: '0',
                       left: '0',
-                      zIndex: '100',
+                      zIndex: '1050',
                       backgroundColor: '#000060',
                     }}
                   >
@@ -141,10 +141,10 @@ function NavbarMain() {
                       className="nav-link-custom navbar-dropdown"
                       show={showUserDropdown}
                       style={{
-                        position: 'unset',
-                        top: '100%',
+                        position: 'absolute',
+                        top: '0',
                         left: '0',
-                        zIndex: '100',
+                        zIndex: '1050',
                         backgroundColor: '#000060',
                       }}
                     >
