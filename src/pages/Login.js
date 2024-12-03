@@ -13,7 +13,7 @@ function Login() {
   });
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
-  const { setUserLevel, setUsername } = useUser(); // Get the context setters
+  const { setUserLevel, setUsername, setToken } = useUser(); // Get the context setters
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -43,14 +43,10 @@ function Login() {
         const token = response.data.token;
         const username = response.data.username;
         const userId = response.data.id
-        console.log('User Level:', userLevel);
-        console.log('Token:', token);
 
-        // Simpan token ke localStorage
-        localStorage.setItem('token', token);
         localStorage.setItem('id', userId);
 
-        // Update context dengan nilai user level dan username
+        setToken(token);
         setUserLevel(userLevel);
         setUsername(username);
 

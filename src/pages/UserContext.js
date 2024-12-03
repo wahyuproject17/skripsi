@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 const UserContext = createContext();
 
@@ -12,26 +13,33 @@ export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState(() => {
     return localStorage.getItem('username') || null;
   });
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
 
   useEffect(() => {
-    if (userId !== null) {
-      localStorage.setItem('userId', userId);
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp < currentTime) {
+          // Token expired
+          logout();
+        }
+      } catch (err) {
+        // Invalid token
+        logout();
+      }
     }
-    if (userLevel !== null) {
-      localStorage.setItem('userLevel', userLevel.toString());
-    }
-    if (username !== null) {
-      localStorage.setItem('username', username);
-    }
-  }, [userId, userLevel, username]);
+  }, [token]);
 
-  const login = (id, level, name) => {
+  const login = (id, level, name, token) => {
     setUserId(id);
     setUserLevel(level);
     setUsername(name);
+    setToken(token);
     localStorage.setItem('userId', id);
     localStorage.setItem('userLevel', level.toString());
     localStorage.setItem('username', name);
+    localStorage.setItem('token', token);
   };
 
   const logout = () => {
@@ -42,11 +50,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('userLevel');
     localStorage.removeItem('username');
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem('id');
+    window.location.href = '/';
   };
 
   return (
-    <UserContext.Provider value={{ userId, userLevel, username, setUserId, setUserLevel, setUsername, login, logout }}>
+    <UserContext.Provider value={{ userId, userLevel, username, token, setUserId, setUserLevel, setUsername, setToken, login, logout }}>
       {children}
     </UserContext.Provider>
   );

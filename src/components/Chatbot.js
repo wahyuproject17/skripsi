@@ -15,8 +15,18 @@ const chatbotIconStyle = {
 };
 
 const chatbotImgStyle = {
-  width: '250px',
-  height: '250px',
+  width: '150px', // Default
+  height: 'auto',
+  right: '20px',
+  bottom: 0,
+  '@media (max-width: 768px)': {
+    width: '100px', // Ukuran lebih kecil untuk layar mobile
+    right: '10px',
+  },
+  '@media (max-width: 480px)': {
+    width: '80px', // Ukuran paling kecil untuk layar yang sangat kecil
+    right: '10px',
+  },
 };
 
 const modalStyle = {
@@ -26,25 +36,38 @@ const modalStyle = {
   backgroundColor: 'white',
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
   borderRadius: '8px 8px 0 0',
-  width: '300px',
-  height: '400px',
+  width: '90%', 
+  maxWidth: '400px', 
+  height: '70%', 
+  maxHeight: '90%', 
   zIndex: 1001,
   display: 'flex',
   flexDirection: 'column',
+  '@media (max-width: 768px)': {
+    width: '90%',
+    maxWidth: '400px',
+    height: '70%',
+    maxHeight: '90%',
+  },
 };
+
 
 const headerStyle = {
   backgroundColor: '#17179D',
   color: 'white',
   padding: '10px',
-  fontSize: '14px',
+  fontSize: 'clamp(14px, 2vw, 18px)', // Skalakan ukuran font
   textAlign: 'center',
   borderTopLeftRadius: '8px',
   borderTopRightRadius: '8px',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  '@media (max-width: 768px)': {
+    fontSize: '14px',
+  },
 };
+
 
 const chatContainerStyle = {
   flex: 1,
@@ -95,6 +118,7 @@ const recommendationStyle = {
   cursor: 'pointer',
   textAlign: 'center',
 };
+
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
