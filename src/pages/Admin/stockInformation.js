@@ -3,7 +3,7 @@ import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import { Delete, Edit } from '@mui/icons-material';
-import { Table, TableBody, TableCell, IconButton, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { useTheme,useMediaQuery, Box, Table, TableBody, TableCell, IconButton, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { fetchIkan, deleteBenih, deleteKonsumsi, editBenih, editKonsumsi, addBenih, addKonsumsi, getAllIkan } from '../../api/Api';
 
 function FishInformation() {
@@ -19,6 +19,8 @@ function FishInformation() {
     jumlah_ikan: '',
     harga_ikan: '',
   });
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Mengambil data gabungan untuk tabel
   useEffect(() => {
@@ -147,13 +149,24 @@ function FishInformation() {
   };
 
   return (
-    <>
-      <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
-        <Sidebar />
-        <div style={{ width: '100%' }}>
-          <NavbarAdmin />
-          <div style={{ border: '1px solid black', padding: '20px' }}>
-            <Button variant="contained" color="primary" onClick={() => setAddModalOpen(true)} style={{ marginBottom: 20 }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+      <Sidebar />
+      <Box sx={{ width: '100%' }}>
+      <NavbarAdmin />
+        <Box 
+          sx={{ 
+            padding: '20px', 
+            marginLeft: isMobile ? '0px' : '250px', 
+            marginTop: '50px',
+            transition: 'margin-left 0.3s ease'
+          }}
+        >
+          <Button
+            variant="contained" 
+            color="primary" 
+            onClick={() => setAddModalOpen(true)} 
+            sx={{ marginBottom: 2 }}
+          >
               Tambah Stok
             </Button>
             <TableContainer component={Paper}>
@@ -192,27 +205,33 @@ function FishInformation() {
                 </TableBody>
               </Table>
             </TableContainer>
-          </div>
+          </Box>
           <FooterAdmin />
-        </div>
-      </div>
+        </Box>
 
       {/* Edit Modal */}
       <Modal
         open={editModalOpen}
         onClose={() => setEditModalOpen(false)}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         aria-labelledby="edit-ikan-modal-title"
         aria-describedby="edit-ikan-modal-description"
       >
-        <div style={{
-          padding: 20,
-          backgroundColor: 'white',
-          margin: 'auto',
-          marginTop: '10%',
-          width: '50%',
-          maxHeight: '70vh', // Batas tinggi untuk modal
-          overflowY: 'auto' // Tambahkan scroll untuk konten yang lebih tinggi
-        }}>
+        <Box 
+          sx={{
+            backgroundColor: 'white',
+            padding: 3,
+            borderRadius: 2,
+            width: isMobile ? '90%' : '50%',
+            maxWidth: '600px',
+            maxHeight: '90%',
+            overflowY: 'auto',
+          }}
+        >
           {editData && (
             <>
               <Typography variant="h6" component="h2" sx={{ marginBottom: 2 }}>Edit Informasi Ikan</Typography>
@@ -258,32 +277,43 @@ function FishInformation() {
                   onChange={handleEditChange}
                   margin="normal"
                 />
-                <Button onClick={handleUpdateIkan} variant="contained" color="primary" sx={{ marginTop: 2 }}>
-                  Simpan Perubahan
-                </Button>
+                <Box sx={{ marginTop: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                  <Button variant="contained" color="primary" onClick={handleUpdateIkan}>
+                    Update
+                  </Button>
+                  <Button variant="outlined" color="secondary" onClick={() => setEditModalOpen(false)}>
+                    Batal
+                  </Button>
+                </Box>
               </form>
             </>
           )}
-        </div>
+          </Box>
       </Modal>
 
       {/* Add Modal */}
       <Modal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         aria-labelledby="add-ikan-modal-title"
         aria-describedby="add-ikan-modal-description"
       >
-        <div style={{
-          padding: 20,
-          backgroundColor: 'white',
-          margin: 'auto',
-          marginTop: '10%',
-          width: '50%',
-          maxHeight: '70vh', // Batas tinggi untuk modal
-          overflowY: 'auto' // Tambahkan scroll untuk konten yang lebih tinggi
-        }}>
-          <>
+          <Box 
+          sx={{
+            backgroundColor: 'white',
+            padding: 3,
+            borderRadius: 2,
+            width: isMobile ? '90%' : '50%',
+            maxWidth: '600px',
+            maxHeight: '90%',
+            overflowY: 'auto',
+          }}
+        >
             <Typography variant="h6" component="h2" sx={{ marginBottom: 2 }}>Tambah Stok Ikan</Typography>
             <form>
               <RadioGroup aria-label="form-type" name="formType" value={formType} onChange={handleFormTypeChange}>
@@ -333,14 +363,18 @@ function FishInformation() {
                 onChange={handleAddFishChange}
                 margin="normal"
               />
-              <Button onClick={handleAddFish} variant="contained" color="primary" sx={{ marginTop: 2 }}>
-                Tambahkan
+              <Box sx={{ marginTop: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+              <Button variant="contained" color="primary" onClick={handleAddFish}>
+                Tambah
               </Button>
+              <Button variant="outlined" color="secondary" onClick={() => setAddModalOpen(false)}>
+                Batal
+              </Button>
+            </Box>
             </form>
-          </>
-        </div>
+          </Box>
       </Modal>
-    </>
+      </Box>
   );
 }
 

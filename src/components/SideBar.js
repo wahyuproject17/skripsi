@@ -5,6 +5,7 @@ import MonitorIcon from '@mui/icons-material/Monitor';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import StoreIcon from '@mui/icons-material/Store';
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,7 +18,7 @@ import { useUser } from '../pages/UserContext'; // Pastikan path sesuai
 export default function SideBar() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(false);
-  const { username, setUsername } = useUser();
+  const { username, setUsername, logout } = useUser();
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -128,6 +129,16 @@ export default function SideBar() {
             </ListItemIcon>
             <ListItemText primary="Manajemen User" />
           </ListItem>
+          <ListItem button 
+            component="a" 
+            onClick={logout} 
+            className={css(styles.listItem)}
+          >
+            <ListItemIcon>
+              <LogoutIcon className={css(styles.icon)} />
+            </ListItemIcon>
+            <ListItemText primary="Sign out" />
+          </ListItem>
         </List>
       </Drawer>
 
@@ -209,15 +220,15 @@ export default function SideBar() {
 
 const styles = StyleSheet.create({
   menuButton: {
-    marginRight: 0,
-    marginLeft: 0,
+    display: 'block',
+    marginLeft: '10px',
+    position: 'fixed',
+    top: '10px',
+    left: '10px',
+    zIndex: 1100, 
     '@media (min-width: 600px)': {
-      display: 'none', // Sembunyikan MenuButton di desktop
+        display: 'none',
     },
-    alignItems: 'flex-start',
-    borderRadius: 0,
-    backgroundColor: '#004080',
-    color: 'white',
   },
   container: {
     width: '250px',

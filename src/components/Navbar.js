@@ -44,7 +44,7 @@ function NavbarMain() {
     <>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: '#000060', position: 'fixed', width: '100%', zIndex: '1000' }}
+        style={{ backgroundColor: '#000060', position: 'fixed', width: '100%', zIndex: '1050' }}
         variant="dark"
         expanded={!isNavbarCollapsed}
       >

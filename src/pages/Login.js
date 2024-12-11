@@ -45,6 +45,7 @@ function Login() {
         const userId = response.data.id
 
         localStorage.setItem('id', userId);
+        localStorage.setItem('token', token);
 
         setToken(token);
         setUserLevel(userLevel);

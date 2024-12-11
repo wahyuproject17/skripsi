@@ -1,51 +1,92 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import Logout from '@mui/icons-material/Logout';
-import { useUser } from '../pages/UserContext'; // Make sure the path is correct
+import { useUser } from '../pages/UserContext';
 
 export default function NavbarAdmin() {
   const { logout } = useUser();
 
   return (
-    <Navbar
-      expand="lg"
-      bg="dark"
-      variant="dark"
-      style={{
-        height: '60px', // Adjust the height as needed
-        position: 'fixed', // Makes the navbar stay at the top
-        top: 0, // Position it at the top
-        left: 0, // Align it to the left
-        right: 0, // Align it to the right
-        zIndex: 1000, // Ensure it stays on top of other elements
-      }}
-    >
-      <Container>
-        <Navbar.Brand href="#">Admin Dashboard</Navbar.Brand>
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className="justify-content-end"
-          style={{
-            backgroundColor: '#212429',
-          }}
-        >
-          <Nav className="ml-auto">
+    <>
+      <Navbar
+        expand="md"
+        className="navbar-custom"
+        style={{
+          height: '60px',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+        }}
+      >
+        <Container fluid>
+          {/* Navbar Brand */}
+          <Navbar.Brand
+            href="#"
+            style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#FFD700',
+              textAlign: 'left',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              flexGrow: 1,
+              '@media (max-width: 600px)': {
+                textAlign: 'center',
+                },
+            }}
+            className="text-center"
+          >
+          </Navbar.Brand>
+
+          {/* Navbar Menu - Hanya tampil di desktop */}
+          <Nav className="d-none d-md-flex">
             <Nav.Link
               onClick={logout}
               style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
-                color: 'white',
+                color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
+                padding: '10px 15px',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = 'red';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = '#ffffff';
               }}
             >
-              <Logout style={{ marginRight: '10px' }} />
-              Logout
+              <Logout
+                style={{
+                  marginRight: '8px',
+                  color: 'inherit',
+                }}
+              />
+              Sign out
             </Nav.Link>
           </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Container>
+      </Navbar>
+
+      {/* Spacer to Avoid Content Overlap */}
+      <div style={{ marginTop: '60px' }}></div>
+
+      {/* Custom CSS */}
+      <style jsx>{`
+        .navbar-custom {
+          background-color: #f8f9fa;
+        }
+
+        @media (min-width: 768px) {
+          .navbar-custom {
+            background-color: #212529;
+          }
+        }
+      `}</style>
+    </>
   );
 }

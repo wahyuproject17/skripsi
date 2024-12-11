@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [totalIkan, setTotalIkan] = useState(0);
   const [totalUser, setTotalUser] = useState(0);
   const [totalAdmin, setTotalAdmin] = useState(0);
-  const [filter, setFilter] = useState('1day');
+  const [filter, setFilter] = useState('3months');
   const [chartData, setChartData] = useState([]);
   const [satisfactionData, setSatisfactionData] = useState([]);
 
@@ -57,22 +57,22 @@ const Dashboard = () => {
           <NavbarAdmin />
           <div className={css(styles.dashboardContainer)}>
             <div className={css(styles.infoBoxes)}>
-              <div className={css(styles.infoBox)}>
-                <FaUsers size={24} color="#4CAF50" className={css(styles.icon)} />
+              <div className={css(styles.infoBox)} style={{backgroundColor: '#37898C'}}>
+                <FaUsers size={24} color="#2CAF70" className={css(styles.icon)} />
                 <h4 className={css(styles.infoTitle)}>Jumlah Pengguna</h4>
                 <p className={css(styles.infoValue)}>{totalUser}</p>
               </div>
-              <div className={css(styles.infoBox)}>
+              <div className={css(styles.infoBox)} style={{backgroundColor: '#A52A2A'}}>
                 <FaUserShield size={24} color="#FF9800" className={css(styles.icon)} />
                 <h4 className={css(styles.infoTitle)}>Jumlah Admin</h4>
                 <p className={css(styles.infoValue)}>{totalAdmin}</p>
               </div>
-              <div className={css(styles.infoBox)}>
+              <div className={css(styles.infoBox)} style={{backgroundColor: '#003F88'}}>
                 <FaFish size={24} color="#00BCD4" className={css(styles.icon)} />
                 <h4 className={css(styles.infoTitle)}>Jumlah Ikan</h4>
                 <p className={css(styles.infoValue)}>{totalIkan}</p>
               </div>
-              <div className={css(styles.infoBox)}>
+              <div className={css(styles.infoBox)} style={{backgroundColor: '#D4D700'}}>
                 <FaChartLine size={24} color="#F44336" className={css(styles.icon)} />
                 <h4 className={css(styles.infoTitle)}>Jumlah Penjualan</h4>
                 <p className={css(styles.infoValue)}>{totalOrder}</p>
@@ -82,7 +82,7 @@ const Dashboard = () => {
 
             <div className={css(styles.filterContainer)}>
               <label htmlFor="filter">Tampilkan Data: </label>
-              <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)} className={css(styles.select)}>
                 <option value="1day">1 Hari Terakhir</option>
                 <option value="7days">7 Hari Terakhir</option>
                 <option value="1month">1 Bulan Terakhir</option>
@@ -104,6 +104,7 @@ const Dashboard = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            <br/>
             <br/>
             <h3 className={css(styles.chartTitle)}>Grafik Tingkat Kepuasan</h3>
             <div className={css(styles.pieContainer)}>
@@ -143,15 +144,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: '250px',
     marginTop: '70px',
+    '@media (max-width: 768px)': {
+      marginLeft: '0',
+      padding: '10px',
+    },
   },
   infoBoxes: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: '20px',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '10px',
+    },
   },
   infoBox: {
-    backgroundColor: '#FFFF99',
     padding: '15px',
     borderRadius: '8px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
@@ -162,17 +171,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     minWidth: '150px',
+    '@media (max-width: 768px)': {
+      width: '90%',
+    },
   },
   infoTitle: {
     margin: '10px 0 5px 0',
     fontSize: '16px',
     fontWeight: '500',
-    color: '#333',
+    color: '#ffffff',
   },
   infoValue: {
     fontSize: '20px',
     fontWeight: 'bold',
-    color: '#555',
+    color: '#ffffff',
   },
   icon: {
     marginBottom: '10px',
@@ -181,10 +193,22 @@ const styles = StyleSheet.create({
     marginBottom: '20px',
     display: 'flex',
     alignItems: 'center',
+    '@media (max-width: 768px)': {
+      justifyContent: 'center',
+    },
   },
+  select: {
+    fontSize: '16px', // Default font size
+    '@media (max-width: 768px)': {
+      fontSize: '12px', // Smaller font size for mobile
+      },
+    },
   chartContainer: {
     width: '100%',
     height: 250,
+    '@media (max-width: 768px)': {
+      height: 200,
+    },
   },
   pieContainer: {
     marginTop: '20px',
@@ -193,6 +217,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    '@media (max-width: 768px)': {
+      height: 250,
+      marginBottom: '20px',
+    },
   },
 });
 

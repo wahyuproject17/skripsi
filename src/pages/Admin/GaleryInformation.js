@@ -3,6 +3,8 @@ import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import {
+  useTheme,
+  useMediaQuery,
   Table,
   TableBody,
   TableCell,
@@ -39,7 +41,9 @@ function GaleryInformation() {
   // State untuk pencarian
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5); // Jumlah baris per halaman
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,11 +158,18 @@ function GaleryInformation() {
 
   return (
     <>
-      <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+      <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
         <Sidebar />
-        <div style={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }}>
           <NavbarAdmin />
-          <div style={{ padding: '20px', marginLeft: '250px', marginTop: '50px' }}>
+          <Box 
+            sx={{ 
+              padding: '20px', 
+              marginLeft: isMobile ? '0px' : '250px', 
+              marginTop: '50px',
+              transition: 'margin-left 0.3s ease'
+            }}
+          >
             {/* Input pencarian */}
             <Stack
               spacing={2}
@@ -241,10 +252,10 @@ function GaleryInformation() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-          </div>
+          </Box>
           <FooterAdmin />
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {/* Modal Form Edit */}
       <Modal

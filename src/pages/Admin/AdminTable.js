@@ -3,7 +3,7 @@ import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button,
+  useTheme,useMediaQuery, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button,
   Box, Typography, IconButton, Grid, TablePagination, InputAdornment, Stack, Container
 } from '@mui/material';
 import { Delete, Edit, Search } from '@mui/icons-material';
@@ -24,6 +24,8 @@ function AdminTable() {
   const [searchTerm, setSearchTerm] = useState(''); // State untuk nilai input pencarian
   const [page, setPage] = useState(0); // State untuk halaman saat ini
   const [rowsPerPage, setRowsPerPage] = useState(5); // State untuk jumlah data per halaman
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     getAdmins();
@@ -97,11 +99,18 @@ function AdminTable() {
   ) : [];
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
       <Sidebar />
-      <div style={{ width: '100%' }}>
+      <Box sx={{ width: '100%' }}>
         <NavbarAdmin />
-        <div style={{ padding: '20px', marginLeft: '250px', marginTop: '50px' }}>
+        <Box 
+          sx={{ 
+            padding: '20px', 
+            marginLeft: isMobile ? '0px' : '250px', 
+            marginTop: '50px',
+            transition: 'margin-left 0.3s ease'
+          }}
+        >
           <Stack
             spacing={2}
             direction="row"
@@ -180,9 +189,9 @@ function AdminTable() {
               setPage(0); // Kembali ke halaman pertama saat mengubah jumlah data per halaman
             }}
           />
-        </div>
+        </Box>
         <FooterAdmin />
-      </div>
+      </Box>
 
       {/* Edit Modal */}
       <Modal
@@ -201,7 +210,7 @@ function AdminTable() {
             backgroundColor: 'white',
             padding: 3,
             borderRadius: 2,
-            width: '90%',
+            width: isMobile ? '90%' : '50%',
             maxWidth: '600px',
             maxHeight: '90%',
             overflowY: 'auto',
@@ -294,7 +303,7 @@ function AdminTable() {
             backgroundColor: 'white',
             padding: 3,
             borderRadius: 2,
-            width: '90%',
+            width: isMobile ? '90%' : '50%',
             maxWidth: '600px',
             maxHeight: '90%',
             overflowY: 'auto',
@@ -364,7 +373,7 @@ function AdminTable() {
           </form>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
-import { TextField, Container, Button, Typography, Box } from '@mui/material';
+import { useTheme,useMediaQuery, TextField, Container, Button, Typography, Box } from '@mui/material';
 import { fetchTulisan, updateTulisanData } from '../../api/Api'; // Impor fungsi dari api.js
 
 function HomeInformation() {
@@ -13,6 +13,8 @@ function HomeInformation() {
     instagram: "",
     email: ""
   });
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const getData = async () => {
@@ -57,11 +59,10 @@ function HomeInformation() {
   };
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
       <Sidebar />
-      <div style={{ flex: 1 }}>
+      <Box sx={{ width: '100%' }}>
         <NavbarAdmin />
-        <Container style={{ padding: '40px', marginLeft: '120px', marginTop: '50px'  }}>
           <Box 
             style={{ 
               padding: '20px', 
@@ -69,7 +70,7 @@ function HomeInformation() {
               borderRadius: '8px', 
               boxShadow: '0 2px 10px rgba(0,0,0,0.1)', 
               maxWidth: '800px', 
-              margin: 'auto' 
+              marginLeft: isMobile ? '0px' : '250px',  
             }}
           >
             <Typography variant="h5" gutterBottom style={{ marginBottom: '20px' }}>
@@ -143,10 +144,9 @@ function HomeInformation() {
               </Box>
             </form>
           </Box>
-        </Container>
         <FooterAdmin />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

@@ -4,7 +4,7 @@ import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import { fetchUsers, deleteUser, updateUser, addUser } from '../../api/Api';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button,
+  useTheme,useMediaQuery, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, TextField, Button,
   Box, Typography, IconButton, Grid, TablePagination, InputAdornment, Stack
 } from '@mui/material';
 import { Delete, Edit, Search } from '@mui/icons-material';
@@ -26,6 +26,8 @@ function UserTable() {
   const [searchTerm, setSearchTerm] = useState(''); // State untuk nilai input pencarian
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Jumlah baris per halaman
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     getUsers();
@@ -119,11 +121,18 @@ function UserTable() {
   ) : [];
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
       <Sidebar />
-      <div style={{ width: '100%' }}>
+      <Box sx={{ width: '100%' }}>
         <NavbarAdmin />
-        <div style={{ padding: '20px', marginLeft: '250px', marginTop: '50px' }}>
+        <Box 
+          sx={{ 
+            padding: '20px', 
+            marginLeft: isMobile ? '0px' : '250px', 
+            marginTop: '50px',
+            transition: 'margin-left 0.3s ease'
+          }}
+        >
         <Stack
               spacing={2}
               direction="row"
@@ -138,7 +147,7 @@ function UserTable() {
                   onClick={() => setAddModalOpen(true)}
                   fullWidth
                 >
-                  <Typography variant="body1">Tambah Pengguna</Typography>
+                  <Typography variant="body1">Tambah User</Typography>
                 </Button>
               </Box>
               <TextField
@@ -200,9 +209,9 @@ function UserTable() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </div>
+        </Box>
         <FooterAdmin />
-      </div>
+      </Box>
 
       {/* Edit Modal */}
       <Modal
@@ -219,7 +228,7 @@ function UserTable() {
             backgroundColor: 'white',
             padding: 3,
             borderRadius: 2,
-            width: '90%',
+            width: isMobile ? '90%' : '50%',
             maxWidth: '600px',
             maxHeight: '90%',
             overflowY: 'auto',
@@ -336,7 +345,7 @@ function UserTable() {
             backgroundColor: 'white',
             padding: 3,
             borderRadius: 2,
-            width: '90%',
+            width: isMobile ? '90%' : '50%',
             maxWidth: '600px',
             maxHeight: '90%',
             overflowY: 'auto',
@@ -433,7 +442,7 @@ function UserTable() {
           </form>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 

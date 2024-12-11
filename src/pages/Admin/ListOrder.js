@@ -3,7 +3,7 @@ import Sidebar from '../../components/SideBar';
 import NavbarAdmin from '../../components/navbarAdmin';
 import FooterAdmin from '../../components/FooterAdmin';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Modal, Box,
+  useTheme, useMediaQuery, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Modal, Box,
   Typography, Grid, TablePagination, TextField, MenuItem, Select, FormControl, InputLabel
 } from '@mui/material';
 import { Delete as DeleteIcon, Description as DescriptionIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
@@ -19,6 +19,8 @@ function ListOrder() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedYear, setSelectedYear] = useState('All');
   const [years, setYears] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,12 +114,18 @@ function ListOrder() {
   };
 
   return (
-    <div>
-      <div style={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
+      <Box sx={{ display: 'flex', backgroundColor: '#FFF', minHeight: '100vh' }}>
         <Sidebar />
-        <div style={{ width: '100%'}}>
+        <Box sx={{ width: '100%' }}>
           <NavbarAdmin />
-          <div style={{ padding: '20px', marginLeft: '250px', marginTop: '80px' }}>
+          <Box 
+            sx={{ 
+              padding: '20px', 
+              marginLeft: isMobile ? '0px' : '250px', 
+              marginTop: '50px',
+              transition: 'margin-left 0.3s ease'
+            }}
+          >
             {/* Dropdown tahun */}
             <FormControl variant="outlined" sx={{ marginBottom: '20px', minWidth: 120 }}>
               <InputLabel>Tahun</InputLabel>
@@ -206,10 +214,9 @@ function ListOrder() {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          </div>
+          </Box>
           <FooterAdmin />
-        </div>
-      </div>
+        </Box>
 
       {/* Modal detail pesanan */}
       <Modal
@@ -276,7 +283,7 @@ function ListOrder() {
           )}
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
 
