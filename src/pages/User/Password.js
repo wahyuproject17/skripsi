@@ -1,67 +1,61 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addUser } from '../../api/Api'; // Pastikan path ini sesuai
-import { IconButton, InputAdornment, TextField } from '@mui/material'; // Import Material UI components
-import { Visibility, VisibilityOff } from '@mui/icons-material'; // Import the icons
+import { updatePassword } from '../../api/Api'; // Pastikan fungsi API sesuai
+import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-function Registrasi() {
+function UbahPassword() {
+  const [userId, setUserId] = useState(null);
   const [formData, setFormData] = useState({
-    username: '',
-    nama_lengkap: '',
-    no_hp: '',
-    email: '',
-    jenkel: '', 
-    alamat: '',
-    password: '',
-    repeatPassword: '',
+    oldPassword: '',
+    newPassword: '',
+    repeatNewPassword: '',
   });
-  const [captchaValue, setCaptchaValue] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const recaptchaRef = useRef();
+
+  // Ambil userId dari localStorage
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('id');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      alert('User ID tidak ditemukan. Harap login kembali.');
+      navigate('/login'); // Arahkan ke login jika userId tidak ditemukan
+    }
+  }, [navigate]);
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
-  };
-
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validasi input
-    if (formData.password !== formData.repeatPassword) {
-      alert('Kata sandi tidak sama!');
-      return;
-    }
-    if (!captchaValue) {
-      alert('Silakan verifikasi reCAPTCHA.');
+    if (formData.newPassword !== formData.repeatNewPassword) {
+      alert('Kata sandi baru tidak sama!');
       return;
     }
 
     try {
-      const response = await addUser({
-        ...formData,
-        captcha: captchaValue,
+      const response = await updatePassword(userId, {
+        oldPassword: formData.oldPassword,
+        newPassword: formData.newPassword,
       });
 
-      console.log('API Response:', response); // Log respons untuk debugging
-
       if (response.success) {
-        alert('Registrasi berhasil');
-        navigate('/login');
+        alert('Kata sandi berhasil diubah');
+        navigate('/Home');
       } else {
-        alert(response.message || 'Gagal registrasi');
+        alert(response.message || 'Gagal mengubah kata sandi');
       }
     } catch (error) {
-      console.error('Error during registration:', error);
-      alert('Cek kembali data anda!');
+      console.error('Error updating password:', error);
+      alert('Terjadi kesalahan. Silakan coba lagi.');
     }
   };
 
@@ -75,15 +69,15 @@ function Registrasi() {
                 <div className="card-body p-5">
                   <h2 className="text-uppercase text-center mb-5">Ubah Kata Sandi</h2>
                   <form onSubmit={handleSubmit}>
-
+                    {/* Password Lama */}
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="password">Kata Sandi Lama</label>
+                      <label className="form-label" htmlFor="oldPassword">Kata Sandi Lama</label>
                       <TextField
                         type={showPassword ? 'text' : 'password'}
-                        id="password"
+                        id="oldPassword"
                         className="form-control form-control-lg"
-                        name="password"
-                        value={formData.password}
+                        name="oldPassword"
+                        value={formData.oldPassword}
                         onChange={handleInputChange}
                         required
                         fullWidth
@@ -103,16 +97,18 @@ function Registrasi() {
                       />
                     </div>
 
+                    {/* Kata Sandi Baru */}
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="repeatPassword">Kata Sandi Baru</label>
+                      <label className="form-label" htmlFor="newPassword">Kata Sandi Baru</label>
                       <TextField
                         type={showPassword ? 'text' : 'password'}
-                        id="repeatPassword"
+                        id="newPassword"
                         className="form-control form-control-lg"
-                        name="repeatPassword"
-                        value={formData.repeatPassword}
+                        name="newPassword"
+                        value={formData.newPassword}
                         onChange={handleInputChange}
                         required
+                        fullWidth
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
@@ -129,9 +125,38 @@ function Registrasi() {
                       />
                     </div>
 
+                    {/* Ulangi Kata Sandi Baru */}
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="repeatNewPassword">Ulangi Kata Sandi Baru</label>
+                      <TextField
+                        type={showPassword ? 'text' : 'password'}
+                        id="repeatNewPassword"
+                        className="form-control form-control-lg"
+                        name="repeatNewPassword"
+                        value={formData.repeatNewPassword}
+                        onChange={handleInputChange}
+                        required
+                        fullWidth
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => setShowPassword(!showPassword)}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </div>
+
+                    {/* Tombol Submit */}
                     <div className="d-flex justify-content-center">
                       <button type="submit" className="btn btn-primary btn-block btn-lg gradient-custom-4 text-body">
-                        Daftar
+                        Ubah Kata Sandi
                       </button>
                     </div>
                   </form>
@@ -145,4 +170,4 @@ function Registrasi() {
   );
 }
 
-export default Registrasi;
+export default UbahPassword;

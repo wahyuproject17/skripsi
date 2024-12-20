@@ -52,6 +52,16 @@ export const updateUser = async (id, updatedData) => {
   }
 };
 
+export const updatePassword = async (userId, passwordData) => {
+  try {
+    const response = await API.put(`/${userId}/password`, passwordData);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update password:', error);
+    throw error;
+  }
+};
+
 // Fungsi untuk menghapus data pengguna di server
 export const deleteUser = async (id) =>{
   try {
