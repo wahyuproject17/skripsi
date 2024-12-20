@@ -1,22 +1,41 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addUser } from '../../api/Api'; // Pastikan path ini sesuai
+import { getUserById, updateUser } from '../../api/Api'; // Pastikan path dan fungsi API sesuai
 
-function Registrasi() {
+function EditUserInformation() {
   const [formData, setFormData] = useState({
     username: '',
     nama_lengkap: '',
     no_hp: '',
     email: '',
-    jenkel: '', 
+    jenkel: '',
     alamat: '',
-    password: '',
-    repeatPassword: '',
   });
-  const [captchaValue, setCaptchaValue] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
+
   const navigate = useNavigate();
-  const recaptchaRef = useRef();
+  const id = localStorage.getItem('id');
+
+  useEffect(() => {
+    // Fetch data user berdasarkan ID
+    const fetchUserData = async () => {
+      if (!id) {
+        console.error('ID is missing from localStorage');
+        return;
+      }
+      try {
+        const user = await getUserById(id);
+        if (user && user.length > 0) {
+          setFormData(user[0]); // Ambil data user dari array
+        } else {
+          console.warn('User data is empty');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchUserData();
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -26,40 +45,19 @@ function Registrasi() {
     }));
   };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validasi input
-    if (formData.password !== formData.repeatPassword) {
-      alert('Kata sandi tidak sama!');
-      return;
-    }
-    if (!captchaValue) {
-      alert('Silakan verifikasi reCAPTCHA.');
-      return;
-    }
-
     try {
-      const response = await addUser({
-        ...formData,
-        captcha: captchaValue,
-      });
-
-      console.log('API Response:', response); // Log respons untuk debugging
-
+      const response = await updateUser(id, formData); // Panggil API update user
       if (response.success) {
-        alert('Registrasi berhasil');
-        navigate('/login');
+        alert('Informasi berhasil diperbarui');
+        navigate('/Home'); // Redirect ke halaman profil atau lainnya
       } else {
-        alert(response.message || 'Gagal registrasi');
+        alert(response.message || 'Gagal memperbarui informasi');
       }
     } catch (error) {
-      console.error('Error during registration:', error);
-      alert('Cek kembali data anda!');
+      console.error('Error updating user information:', error);
+      alert('Terjadi kesalahan, coba lagi!');
     }
   };
 
@@ -71,7 +69,7 @@ function Registrasi() {
             <div className="col-12 col-md-9 col-lg-7 col-xl-6">
               <div className="card" style={{ borderRadius: '15px' }}>
                 <div className="card-body p-5">
-                  <h2 className="text-uppercase text-center mb-5">Informasi Profil</h2>
+                  <h2 className="text-uppercase text-center mb-5">Edit Informasi Profil</h2>
                   <form onSubmit={handleSubmit}>
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="namaLengkap">Nama Lengkap</label>
@@ -181,4 +179,4 @@ function Registrasi() {
   );
 }
 
-export default Registrasi;
+export default EditUserInformation;

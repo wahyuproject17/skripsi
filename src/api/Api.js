@@ -21,6 +21,16 @@ export const fetchUsers = async () => {
   }
 };
 
+export const getUserById = async (id) => { 
+  try {
+    const response = await API.get(`user/get-user/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Terjadi kesalahan saat mengambil data pengguna');
+  }
+};
+
   export const addUser = async (userData) => {
     try {
         const response = await API.post('user/add-user', userData);
