@@ -148,6 +148,12 @@ function NavbarMain() {
                         backgroundColor: '#000060',
                       }}
                     >
+                      <NavDropdown.Item as={Link} to="/User" onClick={handleNavLinkClick}>
+                        Ubah Profil
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/Password" onClick={handleNavLinkClick}>
+                        Ubah Password
+                      </NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/History" onClick={handleNavLinkClick}>
                         Riwayat Pesanan
                       </NavDropdown.Item>

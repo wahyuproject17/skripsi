@@ -5,13 +5,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import History from './pages/History';
+import History from './pages/User/History';
 import Gallery from './pages/Gallery';
 import Shop from './pages/Shop';
 import Location from './pages/Location';
 import AdminHome from './pages/Admin/AdminHome';
 import Login from './pages/Login';
 import Registrasi from './pages/Registrasi';
+import UserInformation from './pages/User/UserInformation';
+import Password from './pages/User/Password';
 import GaleryInformation from './pages/Admin/GaleryInformation';
 import HomeInformation from './pages/Admin/HomeInformation';
 import AdminTable from './pages/Admin/AdminTable';
@@ -111,6 +113,8 @@ const App = () => {
         <Route path='/location' element={<Location />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/history' element={<History />} />
+        <Route path='/user' element={<UserInformation />} />
+        <Route path='/password' element={<Password />} />
 
         {/* ADMIN */}
         <Route path='/admin' element={<ProtectedRoute component={AdminHome} requiredLevel={1} />} />

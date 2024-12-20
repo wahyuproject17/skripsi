@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Container, Spinner, Alert, Button, Modal, Form } from 'react-bootstrap';
-import { fetchOrderById, ratingOrder } from '../api/Api'; // Update import path
+import { fetchOrderById, ratingOrder } from '../../api/Api'; // Update import path
 
 const History = () => {
   const [orderHistory, setOrderHistory] = useState([]);
