@@ -52,9 +52,9 @@ export const updateUser = async (id, updatedData) => {
   }
 };
 
-export const updatePassword = async (userId, passwordData) => {
+export const updatePassword = async (id, passwordData) => {
   try {
-    const response = await API.put(`/user/${userId}/password`, passwordData);
+    const response = await API.put(`/user/password/${id}`, passwordData);
     return response.data;
   } catch (error) {
     console.error('Failed to update password:', error);

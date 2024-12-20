@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function UbahPassword() {
-  const [userId, setUserId] = useState(null);
+  const [id, setUserId] = useState(null);
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
@@ -42,7 +42,7 @@ function UbahPassword() {
     }
 
     try {
-      const response = await updatePassword(userId, {
+      const response = await updatePassword(id, {
         oldPassword: formData.oldPassword,
         newPassword: formData.newPassword,
       });
