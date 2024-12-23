@@ -5,7 +5,7 @@ import { faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../pages/UserContext'; // Pastikan path sesuai
 import { Link, useLocation } from 'react-router-dom';
 import '../App.css';
-import { logo } from '../assets';
+import { logo2 } from '../assets';
 
 function NavbarMain() {
   const { username, logout } = useUser();
@@ -49,7 +49,7 @@ function NavbarMain() {
         expanded={!isNavbarCollapsed}
       >
         <Container>
-          <img src={logo} alt="logo" width="40" height="50" />
+          <img src={logo2} alt="logo" width="40" height="50" />
           <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleNavbarToggle} />
           <Navbar.Collapse
             id="basic-navbar-nav"

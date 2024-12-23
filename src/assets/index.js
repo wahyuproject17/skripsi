@@ -11,6 +11,8 @@ import Bg1 from "./bg1.jpg"
 import Bg2 from "./bg2.jpg"
 import Bg3 from "./bg3.jpg"
 import logo from "./logo.png"
+import logo2 from "./logo_unnes.png"
+
 import Chatbots from "../components/Chatbot"
 
-export {Img1, Img2, Img3, Img4, Img5, Img29, Img30, Img31, Img32, Bg1, Bg2, Bg3, logo, Chatbots}
+export {Img1, Img2, Img3, Img4, Img5, Img29, Img30, Img31, Img32, Bg1, Bg2, Bg3, logo, logo2, Chatbots}

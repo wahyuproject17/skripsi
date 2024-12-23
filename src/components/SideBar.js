@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import logo from '../assets/logo.png'; // Sesuaikan dengan path logo Anda
+import logo2 from '../assets/logo.png'; // Sesuaikan dengan path logo Anda
 import { useUser } from '../pages/UserContext'; // Pastikan path sesuai
 
 export default function SideBar() {
@@ -61,7 +61,7 @@ export default function SideBar() {
       >
         <div className={css(styles.drawerHeader)}>
           <div className={css(styles.containers)}>
-            <img src={logo} alt="logo" className={css(styles.logo)} />
+            <img src={logo2} alt="logo" className={css(styles.logo)} />
             <div>
               <p className={css(styles.username)}>{username}</p>
             </div>
@@ -146,7 +146,7 @@ export default function SideBar() {
       <div className={css(styles.container)}>
         <List>
           <div className={css(styles.containers)}>
-            <img src={logo} alt="logo" className={css(styles.logo)} />
+            <img src={logo2} alt="logo" className={css(styles.logo)} />
             <div>
               <p className={css(styles.username)}>{username}</p>
             </div>
