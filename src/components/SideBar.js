@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import logo2 from '../assets/logo.png'; // Sesuaikan dengan path logo Anda
+import logo2 from '../assets/logo_unnes.png'; // Sesuaikan dengan path logo Anda
 import { useUser } from '../pages/UserContext'; // Pastikan path sesuai
 
 export default function SideBar() {
