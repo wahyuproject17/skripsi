@@ -2,7 +2,7 @@ import axios from "axios";
 import {redirect} from 'react-router-dom'
 
 export const API = axios.create({
-    baseURL: 'http://localhost:5000/api/',
+    baseURL: 'https://duanol.bbimijen.my.id/api/',
 });
 
 export default API;

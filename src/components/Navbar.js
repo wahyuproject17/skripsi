@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { useUser } from '../pages/UserContext'; // Pastikan path sesuai
+import { useUser } from '../pages/UserContext';
 import { Link, useLocation } from 'react-router-dom';
 import '../App.css';
-import { logo2 } from '../assets';
+import { logo } from '../assets';
 
 function NavbarMain() {
   const { username, logout } = useUser();
@@ -49,7 +49,7 @@ function NavbarMain() {
         expanded={!isNavbarCollapsed}
       >
         <Container>
-          <img src={logo2} alt="logo" width="40" height="50" />
+          <img src={logo} alt="logo" width="40" height="50" />
           <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleNavbarToggle} />
           <Navbar.Collapse
             id="basic-navbar-nav"
