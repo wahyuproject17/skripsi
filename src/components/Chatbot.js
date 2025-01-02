@@ -152,7 +152,7 @@ const Chatbot = () => {
         });
   
         // Tambahkan respons dari API ke daftar pesan
-        const botResponse = response.data.response || 'Maaf, terjadi kesalahan.';
+        const botResponse = capitalizeFirstLetter(response.data.response || 'Maaf, terjadi kesalahan.');
         setMessages((prevMessages) => [
           ...prevMessages,
           { from: 'bot', text: botResponse },
@@ -167,6 +167,11 @@ const Chatbot = () => {
       }
     }
   };
+
+  const capitalizeFirstLetter = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+  
 
   const handleRecommendationClick = (recommendation) => {
     handleSendMessage(recommendation);
