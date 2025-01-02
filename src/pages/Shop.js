@@ -140,6 +140,7 @@ const Shop = () => {
         }
     
         const orderData = {
+            userId: localStorage.getItem('id'),
             kategori: selectedCategory,
             jenisikan: selectedFish,
             ukuran: selectedSize,
