@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NavigationBar from '../../components/Navbar';
 import { Table, Container, Spinner, Alert, Button, Modal, Form } from 'react-bootstrap';
 import { fetchOrderById, ratingOrder } from '../../api/Api'; // Update import path
 
@@ -59,27 +60,49 @@ const History = () => {
 
   if (loading) {
     return (
-      <Container style={{ marginTop: '50px' }}>
-        <h3>Riwayat Pesanan</h3>
-        <Spinner animation="border" variant="primary" />
-        <span> Loading...</span>
-      </Container>
+      <div>
+        <div>
+        <NavigationBar />
+        </div>
+        <div style={{ height: '10px', backgroundColor: '#000060', margin: '0 0 20px 0' }}></div>
+        <div style={{ marginTop: '80px' }}>
+        <Container>
+          <h3>Riwayat Pesanann</h3>
+          <Spinner animation="border" variant="primary" />
+          <span> Loading...</span>
+        </Container>
+        </div>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Container style={{ marginTop: '50px' }}>
-        <h3>Riwayat Pesanan</h3>
-        <Alert variant="danger">{error}</Alert>
-      </Container>
+      <div>
+        <div>
+        <NavigationBar />
+        </div>
+        <div style={{ height: '10px', backgroundColor: '#000060', margin: '0 0 20px 0' }}></div>
+        <div style={{ marginTop: '80px' }}>
+        <Container>
+          <h3>Riwayat Pesanan</h3>
+          <Alert variant="danger">{error}</Alert>
+        </Container>
+        </div>
+      </div>
     );
   }
 
   const hasSuccessfulOrders = orderHistory.some((order) => order.status === 'berhasil');
 
   return (
-    <Container style={{ marginTop: '50px' }}>
+    <div>
+    <div>
+    <NavigationBar />
+    </div>
+    <div style={{ height: '10px', backgroundColor: '#000060', margin: '0 0 20px 0' }}></div>
+    <div style={{ marginTop: '80px' }}></div>
+    <Container>
       <h3>Riwayat Pesanan</h3>
       <div className="table-responsive">
         <Table striped bordered hover>
@@ -176,7 +199,7 @@ const History = () => {
         </Modal.Footer>
       </Modal>
     </Container>
-  );
+    </div> );
 };
 
 export default History;

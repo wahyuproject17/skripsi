@@ -128,7 +128,7 @@ const App = () => {
         <Route path='/admin/user-table' element={<ProtectedRoute component={UserTable} requiredLevel={1} />} />
       </Routes>
 
-      <ChatbotWithRoute />
+       <ChatbotWithRoute />
     </Router>
   );
 };
