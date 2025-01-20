@@ -131,7 +131,7 @@ const Chatbot = () => {
   const recommendations = [
     'Apa itu BBI Mijen?',
     'Apa jenis ikan yang tersedia?',
-    'Berapa harga Benih Nila?',
+    'Berapa stok Benih Nila 5 cm?',
   ];
 
   const handleClick = () => {
