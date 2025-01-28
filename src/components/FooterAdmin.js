@@ -7,6 +7,21 @@ const FooterAdmin = () => {
       <p className={css(styles.footerText)}>
         © 2024 Balai Benih Mijen. All rights reserved.
       </p>
+      <p>
+          Created by{' '}
+          <a
+            href="https://www.unnes.ac.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'inline-block' }}
+            >
+            <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/79/Logo_Universitas_Negeri_Semarang_%28UNNES%29.png"
+            alt="UNNES Logo"
+            style={{ width: '50px', height: 'auto' }}
+            />
+            </a>
+        </p>
     </footer>
   );
 };
