@@ -8,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { fetchTulisan } from "../api/Api";
 import InstagramIcon from '@mui/icons-material/Instagram';
+import LogoUnnes from '../assets/logo_unnes.png';
 
 const markerIcon = new Icon({
     iconUrl: require("../images/marker.png"),
@@ -87,10 +88,8 @@ const Footer = () => {
                     </p>
                 </div>
             </div>
-            <div style={{backgroundColor: '#000070', textAlign: 'center', color: 'white', fontSize: '14px', fontFamily: 'sans-serif'}}>
-                <p>© 2024 | All Rights Reserved by Balai Benih Ikan Mijen</p>
-                <p>
-                    Created by{' '}
+            <div style={{backgroundColor: '#4682B4', textAlign: 'center', color: 'white', fontSize: '12px', fontFamily: 'sans-serif'}}>
+                <p>© 2024 - {new Date().getFullYear()} | All Rights Reserved by {' '}
                     <a
                     href="https://www.unnes.ac.id/"
                     target="_blank"
@@ -98,9 +97,9 @@ const Footer = () => {
                     style={{ display: 'inline-block' }}
                     >
                     <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/7/79/Logo_Universitas_Negeri_Semarang_%28UNNES%29.png"
+                        src={LogoUnnes}
                         alt="UNNES Logo"
-                        style={{ width: '50px', height: 'auto' }}
+                        style={{ width: '25px', height: 'auto' }}
                     />
                     </a>
                 </p>

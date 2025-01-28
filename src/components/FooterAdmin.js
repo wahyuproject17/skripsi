@@ -1,27 +1,25 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import LogoUnnes from '../assets/logo_unnes.png'
 
 const FooterAdmin = () => {
   return (
     <footer className={css(styles.footer)}>
       <p className={css(styles.footerText)}>
-        © 2024 Balai Benih Mijen. All rights reserved.
+      © 2024 - {new Date().getFullYear()} | All Rights Reserved by {' '}
+      <a
+      href="https://www.unnes.ac.id/"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ display: 'inline-block' }}
+      >
+      <img
+      src={LogoUnnes}
+      alt="UNNES Logo"
+      style={{ width: '25px', height: 'auto' }}
+      />
+      </a>
       </p>
-      <p>
-          Created by{' '}
-          <a
-            href="https://www.unnes.ac.id/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'inline-block' }}
-            >
-            <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/79/Logo_Universitas_Negeri_Semarang_%28UNNES%29.png"
-            alt="UNNES Logo"
-            style={{ width: '50px', height: 'auto' }}
-            />
-            </a>
-        </p>
     </footer>
   );
 };
@@ -30,7 +28,7 @@ export default FooterAdmin;
 
 const styles = StyleSheet.create({
   footer: {
-    backgroundColor: 'rgba(0, 0, 30, 0.5)', // Warna latar belakang dengan transparansi
+    backgroundColor: '#4682B4', // Warna latar belakang dengan transparansi
     color: '#fff',
     textAlign: 'center',
     padding: '15px 0',
