@@ -174,7 +174,21 @@ const Home = () => {
                 </div>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button onClick={() => window.location.href = '/Shop'} style={{ backgroundColor: 'green', textAlign: 'center', fontSize: '20px', alignItems: 'center' }}>Pesan Sekarang</Button>
+                <Button 
+                    onClick={() => {
+                        const token = localStorage.getItem("token"); 
+                        if (!token) {
+                            alert('Anda harus login terlebih dahulu untuk melakukan pemesanan');
+                            window.location.href = "/login"; // Jika belum login, arahkan ke halaman login
+                        } else {
+                            window.location.href = "/Shop"; // Jika sudah login, lanjut ke halaman Shop
+                        }
+                    }} 
+                    style={{ backgroundColor: 'green', textAlign: 'center', fontSize: '20px', alignItems: 'center' }}
+                >
+                    Pesan Sekarang
+                </Button>
+
                 </div>
                 <Footer />
             </div>

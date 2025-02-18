@@ -35,25 +35,34 @@ function Registrasi() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validasi input
+  
+    // Validasi kata sandi
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      alert('Kata sandi harus minimal 8 karakter dan merupakan gabungan huruf dan angka.');
+      return;
+    }
+  
+    // Validasi konfirmasi kata sandi
     if (formData.password !== formData.repeatPassword) {
       alert('Kata sandi tidak sama!');
       return;
     }
+  
+    // Validasi reCAPTCHA
     if (!captchaValue) {
       alert('Silakan verifikasi reCAPTCHA.');
       return;
     }
-
+  
     try {
       const response = await addUser({
         ...formData,
         captcha: captchaValue,
       });
-
+  
       console.log('API Response:', response); // Log respons untuk debugging
-
+  
       if (response.success) {
         alert('Registrasi berhasil');
         navigate('/login');
@@ -65,6 +74,7 @@ function Registrasi() {
       alert('Cek kembali data anda!');
     }
   };
+  
 
   return (
     <section className="vh-100 bg-image">

@@ -55,7 +55,7 @@ function Login() {
         if (userLevel === 1) {
           navigate('/admin/home');
         } else if (userLevel === 2) {
-          navigate('/');
+          navigate('/Shop');
         }
       } else {
         alert(response.data.message || 'Login gagal');
