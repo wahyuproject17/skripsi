@@ -147,7 +147,7 @@ const Chatbot = () => {
   
       try {
         // Kirim pesan ke backend API
-        const response = await axios.post('https://00d2-34-86-24-177.ngrok-free.app/api/chatbot', {
+        const response = await axios.post('https://3c57-103-23-103-95.ngrok-free.app/api/chatbot', {
           question: messageText,
         });
   
